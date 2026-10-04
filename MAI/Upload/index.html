@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, initial-scale=1.0">
+    <title>MAI — Загрузка фотографий</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            width: 1920px;
+            height: 1024px;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', 'Segoe UI', Tahoma, Arial, sans-serif;
+            color: #222;
+            background: #fff;
+        }
+
+        .page {
+            width: 1920px;
+            height: 1024px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: linear-gradient(135deg, #FF427E 0%, #FF3C79 21%, #FF7CA5 47%, #D0577D 71%, #772640 100%);
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .page img, .page svg {
+            -webkit-user-drag: none;
+            user-drag: none;
+            pointer-events: none;
+        }
+
+        .page__texture {
+            position: absolute;
+            top: 100px;
+            left: 0;
+            width: 1280px;
+            height: 852px;
+            z-index: 1;
+            pointer-events: none;
+            display: block;
+            overflow: visible;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            width: 1920px;
+            height: 96px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            padding: 0 60px;
+            color: #fff;
+            overflow: hidden;
+            background: linear-gradient(135deg, #FF427E 0%, #FF3C79 21%, #FF7CA5 47%, #D0577D 71%, #772640 100%);
+            background-size: 1920px 1024px;
+            background-position: top left;
+            background-repeat: no-repeat;
+        }
+
+        .header__water {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1920px;
+            height: 96px;
+            z-index: 0;
+            pointer-events: none;
+            display: block;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 4px;
+            background: #000;
+            z-index: 2;
+        }
+
+        .header__left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header__exit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 43.17px;
+            height: 49.33px;
+            flex-shrink: 0;
+            pointer-events: none;
+        }
+
+        .header__exit svg {
+            display: block;
+            width: 43.17px;
+            height: 49.33px;
+        }
+
+        .header__logo {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: 500;
+            color: #FF2A6D;
+            background: #0B091A;
+            letter-spacing: 2px;
+            line-height: 24px;
+            padding: 12px 18px;
+            border-radius: 6px;
+            display: inline-block;
+            text-decoration: none;
+            pointer-events: auto;
+            transition: opacity 0.2s;
+        }
+
+        .header__logo:hover { opacity: 0.85; }
+
+        .header__capsule {
+            width: 660px;
+            height: 75px;
+            background: #0B091A;
+            border-radius: 69px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header__right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header__btn {
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: #000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s;
+            pointer-events: auto;
+            text-decoration: none;
+        }
+
+        .header__btn:hover { opacity: 0.7; }
+
+        .header__btn svg {
+            display: block;
+            pointer-events: none;
+        }
+
+        .main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 96px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .upload-section {
+            width: 1200px;
+            height: 860px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            padding: 30px 40px;
+            background: rgba(11, 9, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 51px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .upload-header {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .upload-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 32px;
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .upload-subtitle {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.4;
+            max-width: 900px;
+        }
+
+        .upload-subtitle__icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .upload-grid {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+            padding: 10px 0;
+            overflow: hidden;
+        }
+
+        .upload-card {
+            position: relative;
+            width: 320px;
+            height: 560px;
+            background: #FFFFFF;
+            border-radius: 40px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        .upload-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(255, 42, 109, 0.3);
+        }
+
+        .upload-card__preview {
+            flex: 1;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            position: relative;
+        }
+
+        .upload-card__preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            pointer-events: none;
+            transition: transform 0.4s ease;
+        }
+
+        .upload-card:hover .upload-card__preview img {
+            transform: scale(1.05);
+        }
+
+        .upload-card__add {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 56px;
+            background: #0B091A;
+            border: none;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.2s ease, background 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 3;
+        }
+
+        .upload-card__add svg {
+            width: 28px;
+            height: 26px;
+            pointer-events: none;
+        }
+
+        .upload-card__add:hover {
+            transform: scale(1.08);
+            background: #FF2A6D;
+        }
+
+        .upload-card__add:hover svg path { fill: #FFFFFF; }
+        .upload-card__add:active { transform: scale(0.94); }
+
+        .upload-card__label {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            padding: 6px 14px;
+            background: rgba(11, 9, 26, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            color: #FFFFFF;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .upload-card.is-filled .upload-card__add { background: #FF2A6D; }
+        .upload-card.is-filled .upload-card__add svg path { fill: #FFFFFF; }
+
+        .upload-card.is-loading .upload-card__preview::after {
+            content: 'Загрузка...';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            color: #0B091A;
+            z-index: 5;
+        }
+
+        .upload-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+            padding-top: 10px;
+        }
+
+        .upload-hint {
+            color: #FF2A6D;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-align: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .upload-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.2;
+            padding: 16px 32px;
+            border-radius: 50px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+            white-space: nowrap;
+            pointer-events: auto;
+        }
+
+        .btn--primary {
+            background: #FFFFFF;
+            color: #0B091A;
+            border-color: #FFFFFF;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn--primary:hover {
+            background: #FF2A6D;
+            border-color: #FF2A6D;
+            color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 42, 109, 0.4);
+        }
+
+        .btn--primary:active { transform: translateY(1px); }
+
+        .btn--secondary {
+            background: transparent;
+            color: #FFFFFF;
+            border-color: #FF2A6D;
+        }
+
+        .btn--secondary:hover {
+            background: #FF2A6D;
+            color: #FFFFFF;
+            transform: translateY(-2px);
+        }
+
+        .btn--secondary:active { transform: translateY(1px); }
+
+        .btn--ghost {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn--ghost:hover {
+            color: #FFFFFF;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn.is-loading {
+            opacity: 0.7;
+            pointer-events: none;
+            cursor: wait;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <svg class="page__texture" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1280" height="852" viewBox="0 0 1280 852" preserveAspectRatio="xMidYMid meet">
+            <defs>
+                <filter id="water-ripple" x="-10%" y="-10%" width="120%" height="120%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="noise">
+                        <animate attributeName="baseFrequency" dur="12s" values="0.012 0.018; 0.018 0.012; 0.012 0.018" repeatCount="indefinite"/>
+                    </feTurbulence>
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
+            </defs>
+            <image xlink:href="../images/фон.png" x="0" y="0" width="1280" height="852" filter="url(#water-ripple)"/>
+        </svg>
+
+        <header class="header">
+            <svg class="header__water" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="96" viewBox="0 0 1920 96" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <filter id="header-water-ripple" x="-10%" y="-10%" width="120%" height="120%">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="2" seed="21" result="noise">
+                            <animate attributeName="baseFrequency" dur="10s" values="0.014 0.02; 0.02 0.014; 0.014 0.02" repeatCount="indefinite"/>
+                        </feTurbulence>
+                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+                    </filter>
+                </defs>
+                <image xlink:href="../images/фон.png" x="0" y="0" width="1920" height="600" preserveAspectRatio="xMidYMid slice" filter="url(#header-water-ripple)"/>
+            </svg>
+
+            <div class="header__left">
+                <a href="../Login/index.html" class="header__exit" aria-label="Выход из аккаунта">
+                    <svg width="52" height="58" viewBox="0 0 52 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M34.9167 4.08337H4.08333V47.25C4.08333 48.8855 4.73303 50.4541 5.8895 51.6105C7.04598 52.767 8.61449 53.4167 10.25 53.4167H34.9167M38 19.5L47.25 28.75L38 38M47.25 28.75H16.4167"
+                              stroke="#000" stroke-width="8.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="../Index/index.html" class="header__logo">MAI</a>
+            </div>
+
+            <div class="header__capsule"></div>
+
+            <div class="header__right">
+                <a href="../Fitting/index.html" class="header__btn" aria-label="Каталог">
+                    <svg width="62" height="59" viewBox="0 0 62 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M33.9292 26.455V24.2658C39.2326 22.8783 43.1792 18.0683 43.1792 12.3333C43.1792 5.51917 37.6601 0 30.8459 0C24.0317 0 18.5126 5.51917 18.5126 12.3333H24.6792C24.6792 8.94167 27.4542 6.16667 30.8459 6.16667C34.2376 6.16667 37.0126 8.94167 37.0126 12.3333C37.0126 15.725 34.2376 18.5 30.8459 18.5C29.1501 18.5 27.7626 19.8875 27.7626 21.5833V26.4858L0.906741 53.28C0.0125746 54.1742 -0.234092 55.5 0.228408 56.6408C0.690908 57.7817 1.83174 58.5525 3.06507 58.5525H58.5651C59.7984 58.5525 60.9392 57.8125 61.4017 56.6408C61.8642 55.5 61.6176 54.1742 60.7234 53.28L33.8676 26.4242L33.9292 26.455ZM10.5267 52.3858L30.8459 32.0667L51.1651 52.3858H10.5267Z" fill="black"/>
+                    </svg>
+                </a>
+                <a href="../Prof/index.html" class="header__btn" aria-label="Профиль">
+                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24.6667 24.6667C31.4808 24.6667 37 19.1475 37 12.3333C37 5.51917 31.4808 0 24.6667 0C17.8525 0 12.3333 5.51917 12.3333 12.3333C12.3333 19.1475 17.8525 24.6667 24.6667 24.6667ZM24.6667 30.8333C16.4342 30.8333 0 34.965 0 43.1667V49.3333H49.3333V43.1667C49.3333 34.965 32.8992 30.8333 24.6667 30.8333Z" fill="black"/>
+                    </svg>
+                </a>
+                <a href="../Wishlist/index.html" class="header__btn" aria-label="Избранное">
+                    <svg width="63" height="56" viewBox="0 0 63 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M60.9199 11.4614C59.9513 9.21849 58.5546 7.18602 56.808 5.47779C55.0601 3.76441 52.9993 2.40282 50.7377 1.46704C48.3925 0.49278 45.8772 -0.00586966 43.3377 5.21307e-05C39.775 5.21307e-05 36.299 0.975638 33.2783 2.81841C32.5557 3.25923 31.8691 3.74341 31.2188 4.27095C30.5684 3.74341 29.8818 3.25923 29.1592 2.81841C26.1385 0.975638 22.6625 5.21307e-05 19.0998 5.21307e-05C16.5344 5.21307e-05 14.0484 0.491459 11.6998 1.46704C9.43066 2.4065 7.38555 3.75786 5.62949 5.47779C3.88058 7.18409 2.48354 9.21704 1.51758 11.4614C0.513086 13.7956 0 16.2743 0 18.8252C0 21.2317 0.491406 23.7393 1.46699 26.2903C2.28359 28.4221 3.4543 30.6334 4.9502 32.8665C7.32051 36.4002 10.5797 40.0858 14.6266 43.8219C21.3328 50.0151 27.974 54.2932 28.2559 54.4666L29.9686 55.5651C30.7273 56.0493 31.7029 56.0493 32.4617 55.5651L34.1744 54.4666C34.4563 54.286 41.0902 50.0151 47.8037 43.8219C51.8506 40.0858 55.1098 36.4002 57.4801 32.8665C58.976 30.6334 60.1539 28.4221 60.9633 26.2903C61.9389 23.7393 62.4303 21.2317 62.4303 18.8252C62.4375 16.2743 61.9244 13.7956 60.9199 11.4614ZM31.2188 49.8489C31.2188 49.8489 5.49219 33.3651 5.49219 18.8252C5.49219 11.4614 11.5842 5.49224 19.0998 5.49224C24.3824 5.49224 28.9641 8.44068 31.2188 12.7477C33.4734 8.44068 38.0551 5.49224 43.3377 5.49224C50.8533 5.49224 56.9453 11.4614 56.9453 18.8252C56.9453 33.3651 31.2188 49.8489 31.2188 49.8489Z" fill="black"/>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="upload-section" id="upload-block">
+                <input type="file" id="upload-input" accept="image/png, image/jpeg, image/webp" hidden>
+
+                <div class="upload-header">
+                    <h1 class="upload-title">Загрузите фотографии</h1>
+                    <p class="upload-subtitle">
+                        <svg class="upload-subtitle__icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 2l5.4 11.7 12.6 1.6-9.3 8.6 2.5 12.6L20 30.3 8.8 36.5l2.5-12.6L2 15.3l12.6-1.6L20 2z" fill="#FFD60A" stroke="#1E5AFF" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                        Для достижения максимального качества рекомендуем загрузить от 1 до 2 фотографий в разных ракурсах. Макс. размер файла: 5 МБ.
+                    </p>
+                </div>
+
+                <div class="upload-grid">
+                    <div class="upload-card upload-card--1" data-index="1" data-default="../images/Bio1.png">
+                        <div class="upload-card__preview">
+                            <img src="../images/Bio1.png" alt="Пример: в полный рост">
+                        </div>
+                        <button class="upload-card__add" type="button" aria-label="Загрузить фото">
+                            <svg viewBox="0 0 57 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M56.8333 41.3333H49.0833V51.6667H43.9167V41.3333H36.1667L46.5 31L56.8333 41.3333ZM49.104 0C50.5171 0 51.6667 1.14958 51.6667 2.56525V25.8333H46.5V5.16667H5.16667V41.3308L31 15.5L38.75 23.25V30.5608L31 22.8057L12.4698 41.3333H31V46.5H2.56267C1.88277 46.4993 1.23095 46.2287 0.750431 45.7477C0.269912 45.2667 -3.44759e-07 44.6147 0 43.9348V2.56525C0.00472761 1.88681 0.276159 1.23746 0.755658 0.757479C1.23516 0.277496 1.88423 0.00541118 2.56267 0H49.104ZM15.5 10.3333C16.8703 10.3333 18.1844 10.8777 19.1534 11.8466C20.1223 12.8156 20.6667 14.1297 20.6667 15.5C20.6667 16.8703 20.1223 18.1844 19.1534 19.1534C18.1844 20.1223 16.8703 20.6667 15.5 20.6667C14.1297 20.6667 12.8156 20.1223 11.8466 19.1534C10.8777 18.1844 10.3333 16.8703 10.3333 15.5C10.3333 14.1297 10.8777 12.8156 11.8466 11.8466C12.8156 10.8777 14.1297 10.3333 15.5 10.3333Z" fill="black"/>
+                            </svg>
+                        </button>
+                        <div class="upload-card__label">В полный рост</div>
+                    </div>
+
+                    <div class="upload-card upload-card--2" data-index="2" data-default="../images/Bio4.png">
+                        <div class="upload-card__preview">
+                            <img src="../images/Bio4.png" alt="Пример: Сбоку">
+                        </div>
+                        <button class="upload-card__add" type="button" aria-label="Загрузить фото">
+                            <svg viewBox="0 0 57 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M56.8333 41.3333H49.0833V51.6667H43.9167V41.3333H36.1667L46.5 31L56.8333 41.3333ZM49.104 0C50.5171 0 51.6667 1.14958 51.6667 2.56525V25.8333H46.5V5.16667H5.16667V41.3308L31 15.5L38.75 23.25V30.5608L31 22.8057L12.4698 41.3333H31V46.5H2.56267C1.88277 46.4993 1.23095 46.2287 0.750431 45.7477C0.269912 45.2667 -3.44759e-07 44.6147 0 43.9348V2.56525C0.00472761 1.88681 0.276159 1.23746 0.755658 0.757479C1.23516 0.277496 1.88423 0.00541118 2.56267 0H49.104ZM15.5 10.3333C16.8703 10.3333 18.1844 10.8777 19.1534 11.8466C20.1223 12.8156 20.6667 14.1297 20.6667 15.5C20.6667 16.8703 20.1223 18.1844 19.1534 19.1534C18.1844 20.1223 16.8703 20.6667 15.5 20.6667C14.1297 20.6667 12.8156 20.1223 11.8466 19.1534C10.8777 18.1844 10.3333 16.8703 10.3333 15.5C10.3333 14.1297 10.8777 12.8156 11.8466 11.8466C12.8156 10.8777 14.1297 10.3333 15.5 10.3333Z" fill="black"/>
+                            </svg>
+                        </button>
+                        <div class="upload-card__label">Сбоку</div>
+                    </div>
+                </div>
+
+                <div class="upload-footer">
+                    <div class="upload-hint" id="upload-hint">Минимум 1 фото обязательно</div>
+                    <div class="upload-buttons">
+                        <button class="btn btn--secondary" type="button" id="upload-toggle">Доп. фото</button>
+                        <button class="btn btn--primary" type="button" id="upload-next">Сохранить и перейти к генерации</button>
+                        <a href="../Data/index.html" class="btn btn--ghost">Назад к параметрам</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_BASE = 'http://192.168.31.158:5000';
+
+            const input = document.getElementById('upload-input');
+            const nextBtn = document.getElementById('upload-next');
+            const hint = document.getElementById('upload-hint');
+            const toggle = document.getElementById('upload-toggle');
+            const userId = localStorage.getItem('user_id');
+
+            if (!input || !nextBtn || !hint) return;
+
+            let activeCard = null;
+
+            async function loadUserPhotos() {
+                if (!userId || userId === '0') return;
+
+                try {
+                    const res = await fetch(`${API_BASE}/api/user/photos?user_id=${userId}`);
+                    if (!res.ok) throw new Error('Ошибка сети');
+                    const photos = await res.json();
+
+                    const cards = document.querySelectorAll('.upload-card');
+
+                    cards.forEach(card => {
+                        const defaultSrc = card.dataset.default;
+                        const img = card.querySelector('.upload-card__preview img');
+                        if (img && defaultSrc) img.src = defaultSrc;
+                        card.classList.remove('is-filled');
+                    });
+
+                    cards.forEach((card, i) => {
+                        const photoPath = photos[i];
+                        if (photoPath) {
+                            const img = card.querySelector('.upload-card__preview img');
+                            if (img) {
+                                img.src = `${API_BASE}/${photoPath}`;
+                                card.classList.add('is-filled');
+                            }
+                        }
+                    });
+
+                    const filledCount = document.querySelectorAll('.upload-card.is-filled').length;
+                    if (filledCount > 0) {
+                        hint.textContent = `Загружено фото: ${filledCount} из 2`;
+                        hint.style.color = '#4ADE80';
+                    } else {
+                        hint.textContent = 'Минимум 1 фото обязательно';
+                        hint.style.color = '#FF2A6D';
+                    }
+                } catch (err) {
+                    console.error('Не удалось загрузить фото:', err);
+                }
+            }
+
+            document.querySelectorAll('.upload-card').forEach(card => {
+                const addBtn = card.querySelector('.upload-card__add');
+                if (!addBtn) return;
+
+                addBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    activeCard = card;
+                    input.value = '';
+                    input.click();
+                });
+            });
+
+            input.addEventListener('change', async () => {
+                if (!activeCard) return;
+                const file = input.files && input.files[0];
+                if (!file) return;
+
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Файл слишком большой! Максимальный размер: 5 МБ.');
+                    return;
+                }
+
+                if (!userId || userId === '0') {
+                    alert('Ошибка: пользователь не авторизован.');
+                    return;
+                }
+
+                const cardIndex = activeCard.dataset.index;
+                const card = activeCard;
+
+                const preview = card.querySelector('.upload-card__preview');
+                let img = preview.querySelector('img');
+                if (!img) {
+                    img = document.createElement('img');
+                    img.alt = 'Загруженное фото';
+                    preview.appendChild(img);
+                }
+                const oldSrc = img.src;
+                if (oldSrc && oldSrc.startsWith('blob:')) {
+                    URL.revokeObjectURL(oldSrc);
+                }
+                img.src = URL.createObjectURL(file);
+
+                card.classList.add('is-loading');
+
+                const formData = new FormData();
+                formData.append('user_id', userId);
+                formData.append('photo_index', cardIndex);
+                formData.append(`photo_${cardIndex}`, file);
+
+                try {
+                    const res = await fetch(`${API_BASE}/api/upload/photos`, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await res.json();
+
+                    if (data.status === 'ok') {
+                        card.classList.remove('is-loading');
+                        card.classList.add('is-filled');
+                        await loadUserPhotos();
+                    } else {
+                        card.classList.remove('is-loading');
+                        alert('Ошибка загрузки: ' + (data.message || 'Неизвестная ошибка'));
+                    }
+                } catch (err) {
+                    console.error('Ошибка сети:', err);
+                    card.classList.remove('is-loading');
+                    alert('Не удалось соединиться с сервером. Проверьте, запущен ли он.');
+                }
+
+                activeCard = null;
+            });
+
+            toggle.addEventListener('click', () => {
+                alert('Доступно только 2 карточки для загрузки.');
+            });
+
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                const filled = document.querySelectorAll('.upload-card.is-filled').length;
+                if (filled === 0) {
+                    alert('Пожалуйста, загрузите хотя бы одну фотографию.');
+                    return;
+                }
+
+                if (!userId || userId === '0') {
+                    alert('Ошибка: пользователь не авторизован.');
+                    return;
+                }
+
+                window.location.href = '../Fitting/index.html';
+            });
+
+            loadUserPhotos();
+        });
+    </script>
+</body>
+</html>

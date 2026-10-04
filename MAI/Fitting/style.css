@@ -1,0 +1,844 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 1920px;
+    height: 1100px;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    color: #222;
+    background: #fff;
+}
+
+.page {
+    width: 1920px;
+    height: 1100px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    background: linear-gradient(
+        135deg,
+        #FF427E 0%,
+        #FF3C79 21%,
+        #FF7CA5 47%,
+        #D0577D 71%,
+        #772640 100%
+    );
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.page img,
+.page svg {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+}
+
+.page__texture {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 1280px;
+    height: 852px;
+    z-index: 1;
+    pointer-events: none;
+    display: block;
+    overflow: visible;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+
+    width: 1920px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 0 60px;
+    color: #fff;
+    overflow: hidden;
+
+    background: linear-gradient(
+        135deg,
+        #FF427E 0%,
+        #FF3C79 21%,
+        #FF7CA5 47%,
+        #D0577D 71%,
+        #772640 100%
+    );
+    background-size: 1920px 1100px;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+.header__water {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 96px;
+    z-index: 0;
+    pointer-events: none;
+    display: block;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    background: #000;
+    z-index: 2;
+}
+
+.header__left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.header__exit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43.17px;
+    height: 49.33px;
+    flex-shrink: 0;
+    pointer-events: auto;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.header__exit:hover {
+    opacity: 0.7;
+}
+
+.header__exit svg {
+    display: block;
+    width: 43.17px;
+    height: 49.33px;
+}
+
+.header__logo {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 24px;
+    font-weight: 500;
+    color: #FF2A6D;
+    background: #0B091A;
+    letter-spacing: 2px;
+    line-height: 24px;
+    padding: 12px 18px;
+    border-radius: 6px;
+    display: inline-block;
+    text-decoration: none;
+    pointer-events: auto;
+    transition: opacity 0.2s;
+}
+
+.header__logo:hover {
+    opacity: 0.85;
+}
+
+.header__capsule {
+    width: 660px;
+    height: 75px;
+    background: #0B091A;
+    border-radius: 69px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.header__right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.header__btn {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+    pointer-events: auto;
+    text-decoration: none;
+}
+
+.header__btn:hover {
+    opacity: 0.7;
+}
+
+.header__btn svg {
+    display: block;
+    pointer-events: none;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-top: 96px;
+    position: relative;
+    z-index: 2;
+}
+
+.fitting-preview {
+    position: absolute;
+    left: 339px;
+    top: 112px;
+    width: 534px;
+    height: 941px;
+    background: #FFFFFF;
+    border: 4px solid #0B091A;
+    border-radius: 51px;
+    box-sizing: border-box;
+}
+
+.fitting-btn {
+    position: absolute;
+    height: 75px;
+    background: #0B091A;
+    color: #FFFFFF;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1;
+    border: none;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    pointer-events: auto;
+    text-decoration: none;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    transform: translateY(0);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.4);
+}
+
+.fitting-btn:hover {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.fitting-btn:active {
+    transform: translateY(6px);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.4);
+}
+
+.fitting-btn--primary {
+    left: 124.5px;
+    top: 853px;
+    width: 277px;
+}
+
+.fitting-btn--saved {
+    left: 124.5px;
+    top: 762px;
+    width: 277px;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.3s ease;
+}
+
+.fitting-side {
+    position: absolute;
+    left: 890px;
+    top: 112px;
+    width: 691px;
+    height: 941px;
+    background: #0B091A;
+    border-radius: 51px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.fitting-side__scroll {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    right: 40px;
+    bottom: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    pointer-events: auto;
+    box-sizing: border-box;
+}
+
+.fitting-side__scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.fitting-side__scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.fitting-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.fitting-card {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: #FFFFFF;
+    border-radius: 20px;
+    border: 2px solid #FF2A6D;
+    box-sizing: border-box;
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+.fitting-card__img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.fitting-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.fitting-card__fav {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    transition: transform 0.15s;
+    z-index: 2;
+}
+
+.fitting-card__fav:hover {
+    transform: scale(1.15);
+}
+
+.fitting-card__fav svg {
+    width: 30px;
+    height: 30px;
+}
+
+.fitting-card__trash {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    transition: transform 0.15s;
+    z-index: 2;
+}
+
+.fitting-card__trash:hover {
+    transform: scale(1.15);
+}
+
+.fitting-card__trash svg {
+    width: 30px;
+    height: 30px;
+}
+
+.fitting-scrollbar {
+    position: absolute;
+    top: 20px;
+    right: 14px;
+    bottom: 20px;
+    width: 12px;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 100px;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.fitting-scrollbar__thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: #FF3071;
+    border-radius: 100px;
+    cursor: grab;
+    pointer-events: auto;
+}
+
+.fitting-side-icon {
+    position: absolute;
+    top: 860.5px;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.15s ease, opacity 0.3s ease, visibility 0.3s ease;
+    transform: scale(1);
+}
+
+.fitting-side-icon.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.fitting-side-icon:hover {
+    transform: scale(1.08);
+}
+
+.fitting-side-icon:active {
+    transform: scale(0.95);
+}
+
+.fitting-side-icon svg {
+    width: 60px;
+    height: 60px;
+    pointer-events: none;
+}
+
+.fitting-side-icon--left {
+    left: 32.25px;
+}
+
+.fitting-side-icon--right {
+    left: 433.75px;
+}
+
+.fitting-status {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.fitting-status.is-visible {
+    display: flex;
+}
+
+.fitting-loader {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.fitting-loader.is-visible {
+    display: flex;
+}
+
+.fitting-loader__wheel {
+    width: 90px;
+    height: 90px;
+    border: 8px solid rgba(11, 9, 26, 0.15);
+    border-top-color: #102824;
+    border-right-color: #D33361;
+    border-bottom-color: #0B091A;
+    border-left-color: #102824;
+    border-radius: 50%;
+    animation: fitting-spin 1s linear infinite, fitting-color 3s linear infinite;
+}
+
+@keyframes fitting-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fitting-color {
+    0% {
+        border-top-color: #102824;
+        border-right-color: #D33361;
+        border-bottom-color: #0B091A;
+        border-left-color: #102824;
+    }
+    33% {
+        border-top-color: #D33361;
+        border-right-color: #0B091A;
+        border-bottom-color: #102824;
+        border-left-color: #D33361;
+    }
+    66% {
+        border-top-color: #0B091A;
+        border-right-color: #102824;
+        border-bottom-color: #D33361;
+        border-left-color: #0B091A;
+    }
+    100% {
+        border-top-color: #102824;
+        border-right-color: #D33361;
+        border-bottom-color: #0B091A;
+        border-left-color: #102824;
+    }
+}
+
+.fitting-loader__text {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 24px;
+    font-weight: 400;
+    color: #0B091A;
+    text-align: center;
+    line-height: 1;
+    animation: fitting-pulse 2s ease-in-out infinite;
+    transform-origin: center center;
+}
+
+@keyframes fitting-pulse {
+    0% {
+        color: #0B091A;
+        transform: scale(1);
+    }
+    50% {
+        color: rgba(11, 9, 26, 0.45);
+        transform: scale(1.08);
+    }
+    100% {
+        color: #0B091A;
+        transform: scale(1);
+    }
+}
+
+.fitting-message {
+    display: none;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 24px;
+    font-weight: 400;
+    color: #0B091A;
+    text-align: center;
+    line-height: 1.3;
+    max-width: 400px;
+}
+
+.fitting-message.is-visible {
+    display: block;
+}
+.fitting-empty-message {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    padding: 40px 20px;
+    grid-column: 1 / -1; /* Растягиваем на всю ширину сетки */
+}
+
+
+/* Скрываем стандартный radio */
+.fitting-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Визуальная обертка сердечка */
+.fitting-card__radio-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.fitting-card__radio-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: rgba(255, 255, 255, 0.4);
+    transition: all 0.2s ease;
+}
+
+.fitting-card__radio-visual svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* ⚡ Выбранный товар — яркое сердечко */
+.fitting-radio:checked + .fitting-card__radio-visual {
+    color: #FF2A6D;
+    filter: drop-shadow(0 0 8px rgba(255, 42, 109, 0.7));
+    transform: scale(1.15);
+}
+
+/* Hover-эффект */
+.fitting-card__radio-label:hover .fitting-card__radio-visual {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.fitting-radio:checked + .fitting-card__radio-visual:hover {
+    color: #ff0040;
+}
+
+/* ==========================================
+   ЗАГОЛОВКИ КАТЕГОРИЙ
+   ========================================== */
+.fitting-category-title {
+    grid-column: 1 / -1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 12px 16px;
+    margin: 24px 0 12px 0;
+    background: linear-gradient(90deg, rgba(255, 42, 109, 0.25) 0%, transparent 100%);
+    border-left: 4px solid #FF2A6D;
+    border-radius: 0 8px 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Иконка-метка перед названием категории */
+.fitting-category-title::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #FF2A6D;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 42, 109, 0.8);
+}
+
+.fitting-category-title:first-child {
+    margin-top: 0;
+}
+
+/* ==========================================
+   КАРТОЧКА ТОВАРА
+   ========================================== */
+.fitting-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid transparent;
+    transition: all 0.25s ease;
+}
+
+/* Выбранная карточка — розовая рамка */
+.fitting-card.is-selected {
+    border-color: #FF2A6D;
+    background: rgba(255, 42, 109, 0.08);
+    box-shadow: 0 0 20px rgba(255, 42, 109, 0.3);
+}
+
+/* ==========================================
+   КНОПКА ВЫБОРА (RADIO) — СВЕРХУ СЛЕВА
+   ========================================== */
+.fitting-card__radio-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(11, 9, 26, 0.85);
+    padding: 6px 12px 6px 8px;
+    border-radius: 30px;
+    backdrop-filter: blur(6px);
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.fitting-card__radio-label:hover {
+    background: rgba(11, 9, 26, 0.95);
+    border-color: rgba(255, 42, 109, 0.5);
+    transform: scale(1.05);
+}
+
+/* Скрываем нативный radio */
+.fitting-radio {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* Визуальный индикатор (кружок) */
+.fitting-card__radio-visual {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.fitting-card__radio-visual::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+/* Когда выбрано — кружок заполняется розовым */
+.fitting-radio:checked + .fitting-card__radio-visual {
+    border-color: #FF2A6D;
+    box-shadow: 0 0 10px rgba(255, 42, 109, 0.6);
+}
+
+.fitting-radio:checked + .fitting-card__radio-visual::after {
+    background: #FF2A6D;
+}
+
+/* Подпись "Выбрать" */
+.fitting-card__radio-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.fitting-radio:checked ~ .fitting-card__radio-text {
+    color: #FF2A6D;
+    font-weight: 500;
+}
+
+/* ==========================================
+   КНОПКА УДАЛИТЬ (КОРЗИНА) — СВЕРХУ СПРАВА
+   ========================================== */
+.fitting-card__trash {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    background: rgba(11, 9, 26, 0.85);
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.fitting-card__trash:hover {
+    background: rgba(255, 42, 109, 0.9);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.fitting-card__trash svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ==========================================
+   ИЗОБРАЖЕНИЕ ТОВАРА
+   ========================================== */
+.fitting-card__img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.fitting-card__img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.fitting-card.is-selected .fitting-card__img img {
+    transform: scale(1.05);
+}

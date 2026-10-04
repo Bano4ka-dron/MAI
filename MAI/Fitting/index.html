@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, initial-scale=1.0">
+    <title>MAI — Примерка</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            width: 1920px;
+            height: 1024px;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, #ff2a6d 0%, #c94b8b 100%);
+            color: #222;
+        }
+
+        .page__texture {
+            position: fixed;
+            top: 0; left: 0;
+            width: 1920px; height: 1024px;
+            z-index: 0;
+            pointer-events: none;
+            display: block;
+            opacity: 0.7;
+        }
+
+        /* ============ ШАПКА ============ */
+        .header {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 100;
+            width: 1920px;
+            height: 96px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            padding: 0 60px;
+            color: #fff;
+            overflow: hidden;
+            background: linear-gradient(135deg, #FF427E 0%, #FF3C79 21%, #FF7CA5 47%, #D0577D 71%, #772640 100%);
+            background-size: 1920px 1024px;
+            background-position: top left;
+            background-repeat: no-repeat;
+        }
+
+        .header__water {
+            position: absolute;
+            top: 0; left: 0;
+            width: 1920px; height: 96px;
+            z-index: 0;
+            pointer-events: none;
+            display: block;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            left: 0; bottom: 0;
+            width: 100%; height: 4px;
+            background: #000;
+            z-index: 2;
+        }
+
+        .header__left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header__exit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 43.17px; height: 49.33px;
+            flex-shrink: 0;
+            pointer-events: none;
+        }
+
+        .header__exit svg {
+            display: block;
+            width: 43.17px; height: 49.33px;
+        }
+
+        .header__logo {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: 500;
+            color: #FF2A6D;
+            background: #0B091A;
+            letter-spacing: 2px;
+            line-height: 24px;
+            padding: 12px 18px;
+            border-radius: 6px;
+            display: inline-block;
+            text-decoration: none;
+            pointer-events: auto;
+            transition: opacity 0.2s;
+        }
+
+        .header__logo:hover { opacity: 0.85; }
+
+        .header__capsule {
+            width: 660px; height: 75px;
+            background: #0B091A;
+            border-radius: 69px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header__right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header__btn {
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: #000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.2s;
+            pointer-events: auto;
+            text-decoration: none;
+        }
+
+        .header__btn:hover { opacity: 0.7; }
+
+        .header__btn svg {
+            display: block;
+            pointer-events: none;
+        }
+
+        /* ============ ОСНОВНОЙ КОНТЕНТ ============ */
+        .main-content {
+            position: relative;
+            z-index: 2;
+            padding-top: 106px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 1024px;
+        }
+
+        .fitting-container {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+            height: calc(1024px - 126px);
+        }
+
+        /* === ЛЕВАЯ ЧАСТЬ === */
+        .fitting-preview {
+            background: #fff;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .fitting-preview__placeholder {
+            color: #ccc;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .fitting-preview__result {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 20px;
+        }
+
+        .fitting-preview__buttons {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 280px;
+            z-index: 5;
+        }
+
+        .fitting-btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .fitting-btn--saved {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .fitting-btn--saved:hover {
+            background: #2a2a3e;
+            transform: translateY(-2px);
+        }
+
+        .fitting-btn--primary {
+            background: #1a1a2e;
+            color: #fff;
+            font-size: 17px;
+            padding: 18px 32px;
+        }
+
+        .fitting-btn--primary:hover {
+            background: #ff2a6d;
+            transform: translateY(-2px);
+        }
+
+        .fitting-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* === ПРАВАЯ ЧАСТЬ === */
+        .fitting-panel {
+            background: rgba(10, 10, 26, 0.92);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .fitting-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .fitting-scroll::-webkit-scrollbar { width: 4px; }
+        .fitting-scroll::-webkit-scrollbar-track { background: transparent; }
+        .fitting-scroll::-webkit-scrollbar-thumb { background: #ff2a6d; border-radius: 2px; }
+
+        .fitting-category-title {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 20px 0 12px 0;
+            padding: 10px 14px;
+            background: linear-gradient(90deg, rgba(255, 42, 109, 0.3) 0%, transparent 100%);
+            border-left: 3px solid #ff2a6d;
+            border-radius: 0 6px 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fitting-category-title::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: #ff2a6d;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 42, 109, 0.8);
+        }
+
+        .fitting-category-title:first-child { margin-top: 0; }
+
+        .fitting-photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .fitting-photo-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            aspect-ratio: 3/4;
+        }
+
+        .fitting-photo-card:hover { border-color: rgba(255, 42, 109, 0.5); }
+        .fitting-photo-card.is-selected {
+            border-color: #ff2a6d;
+            box-shadow: 0 0 15px rgba(255, 42, 109, 0.5);
+        }
+
+        .fitting-photo-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .fitting-photo__badge {
+            position: absolute;
+            bottom: 6px; left: 6px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+        }
+
+        .fitting-clothes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .fitting-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            transition: all 0.25s ease;
+            aspect-ratio: 3/4;
+        }
+
+        .fitting-card:hover { border-color: rgba(255, 42, 109, 0.5); }
+        .fitting-card.is-selected {
+            border-color: #ff2a6d;
+            box-shadow: 0 0 15px rgba(255, 42, 109, 0.5);
+        }
+
+        .fitting-card img {
+            width: 100%; height: 100%;
+            object-fit: contain;
+            padding: 8px;
+        }
+
+        .fitting-card__radio-label {
+            position: absolute;
+            top: 8px; left: 8px;
+            z-index: 2;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 5px 10px 5px 7px;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .fitting-card__radio-label:hover { background: rgba(255, 42, 109, 0.9); }
+
+        .fitting-radio {
+            position: absolute;
+            opacity: 0; width: 0; height: 0;
+            pointer-events: none;
+        }
+
+        .fitting-card__radio-visual {
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .fitting-card__radio-visual::after {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: transparent;
+            transition: all 0.2s ease;
+        }
+
+        .fitting-radio:checked + .fitting-card__radio-visual {
+            border-color: #ff2a6d;
+            box-shadow: 0 0 6px rgba(255, 42, 109, 0.8);
+        }
+
+        .fitting-radio:checked + .fitting-card__radio-visual::after {
+            background: #ff2a6d;
+        }
+
+        .fitting-card__radio-text {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .fitting-card__trash {
+            position: absolute;
+            top: 8px; right: 8px;
+            z-index: 2;
+            width: 28px; height: 28px;
+            border: none;
+            background: rgba(0, 0, 0, 0.8);
+            color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .fitting-card__trash:hover {
+            background: #ff2a6d;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .fitting-card__trash svg {
+            width: 14px; height: 14px;
+        }
+
+        .fitting-empty-message {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            padding: 15px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .fitting-empty-message a {
+            color: #ff2a6d;
+            text-decoration: underline;
+        }
+
+        .fitting-status {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.96);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            border-radius: 30px;
+            gap: 16px;
+        }
+
+        .fitting-status.is-visible { display: flex; }
+
+        .fitting-loader__text {
+            font-size: 18px;
+            color: #1a1a2e;
+            font-weight: 500;
+        }
+
+        .fitting-loader__sub {
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .fitting-loader__spinner {
+            width: 48px; height: 48px;
+            border: 4px solid #eee;
+            border-top-color: #ff2a6d;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <svg class="page__texture" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1024" viewBox="0 0 1920 1024" preserveAspectRatio="xMidYMid slice">
+        <defs>
+            <filter id="page-water-ripple" x="-10%" y="-10%" width="120%" height="120%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="noise">
+                    <animate attributeName="baseFrequency" dur="12s" values="0.012 0.018; 0.018 0.012; 0.012 0.018" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+        </defs>
+        <image xlink:href="../images/фон.png" x="0" y="0" width="1920" height="1024" preserveAspectRatio="xMidYMid slice" filter="url(#page-water-ripple)"/>
+    </svg>
+
+    <header class="header">
+        <svg class="header__water" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="96" viewBox="0 0 1920 96" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <filter id="header-water-ripple" x="-10%" y="-10%" width="120%" height="120%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="2" seed="21" result="noise">
+                        <animate attributeName="baseFrequency" dur="10s" values="0.014 0.02; 0.02 0.014; 0.014 0.02" repeatCount="indefinite"/>
+                    </feTurbulence>
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
+            </defs>
+            <image xlink:href="../images/фон.png" x="0" y="0" width="1920" height="600" preserveAspectRatio="xMidYMid slice" filter="url(#header-water-ripple)"/>
+        </svg>
+
+        <div class="header__left">
+            <a href="../Login/index.html" class="header__exit" aria-label="Выход из аккаунта">
+                <svg width="52" height="58" viewBox="0 0 52 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M34.9167 4.08337H4.08333V47.25C4.08333 48.8855 4.73303 50.4541 5.8895 51.6105C7.04598 52.767 8.61449 53.4167 10.25 53.4167H34.9167M38 19.5L47.25 28.75L38 38M47.25 28.75H16.4167"
+                          stroke="#000" stroke-width="8.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <a href="../Index/index.html" class="header__logo">MAI</a>
+        </div>
+
+        <div class="header__capsule"></div>
+
+        <div class="header__right">
+            <a href="../Fitting/index.html" class="header__btn" aria-label="Каталог">
+                <svg width="62" height="59" viewBox="0 0 62 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M33.9292 26.455V24.2658C39.2326 22.8783 43.1792 18.0683 43.1792 12.3333C43.1792 5.51917 37.6601 0 30.8459 0C24.0317 0 18.5126 5.51917 18.5126 12.3333H24.6792C24.6792 8.94167 27.4542 6.16667 30.8459 6.16667C34.2376 6.16667 37.0126 8.94167 37.0126 12.3333C37.0126 15.725 34.2376 18.5 30.8459 18.5C29.1501 18.5 27.7626 19.8875 27.7626 21.5833V26.4858L0.906741 53.28C0.0125746 54.1742 -0.234092 55.5 0.228408 56.6408C0.690908 57.7817 1.83174 58.5525 3.06507 58.5525H58.5651C59.7984 58.5525 60.9392 57.8125 61.4017 56.6408C61.8642 55.5 61.6176 54.1742 60.7234 53.28L33.8676 26.4242L33.9292 26.455ZM10.5267 52.3858L30.8459 32.0667L51.1651 52.3858H10.5267Z" fill="black"/>
+                </svg>
+            </a>
+            <a href="../Prof/index.html" class="header__btn" aria-label="Профиль">
+                <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24.6667 24.6667C31.4808 24.6667 37 19.1475 37 12.3333C37 5.51917 31.4808 0 24.6667 0C17.8525 0 12.3333 5.51917 12.3333 12.3333C12.3333 19.1475 17.8525 24.6667 24.6667 24.6667ZM24.6667 30.8333C16.4342 30.8333 0 34.965 0 43.1667V49.3333H49.3333V43.1667C49.3333 34.965 32.8992 30.8333 24.6667 30.8333Z" fill="black"/>
+                </svg>
+            </a>
+            <a href="../Wishlist/index.html" class="header__btn" aria-label="Избранное">
+                <svg width="63" height="56" viewBox="0 0 63 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M60.9199 11.4614C59.9513 9.21849 58.5546 7.18602 56.808 5.47779C55.0601 3.76441 52.9993 2.40282 50.7377 1.46704C48.3925 0.49278 45.8772 -0.00586966 43.3377 5.21307e-05C39.775 5.21307e-05 36.299 0.975638 33.2783 2.81841C32.5557 3.25923 31.8691 3.74341 31.2188 4.27095C30.5684 3.74341 29.8818 3.25923 29.1592 2.81841C26.1385 0.975638 22.6625 5.21307e-05 19.0998 5.21307e-05C16.5344 5.21307e-05 14.0484 0.491459 11.6998 1.46704C9.43066 2.4065 7.38555 3.75786 5.62949 5.47779C3.88058 7.18409 2.48354 9.21704 1.51758 11.4614C0.513086 13.7956 0 16.2743 0 18.8252C0 21.2317 0.491406 23.7393 1.46699 26.2903C2.28359 28.4221 3.4543 30.6334 4.9502 32.8665C7.32051 36.4002 10.5797 40.0858 14.6266 43.8219C21.3328 50.0151 27.974 54.2932 28.2559 54.4666L29.9686 55.5651C30.7273 56.0493 31.7029 56.0493 32.4617 55.5651L34.1744 54.4666C34.4563 54.286 41.0902 50.0151 47.8037 43.8219C51.8506 40.0858 55.1098 36.4002 57.4801 32.8665C58.976 30.6334 60.1539 28.4221 60.9633 26.2903C61.9389 23.7393 62.4303 21.2317 62.4303 18.8252C62.4375 16.2743 61.9244 13.7956 60.9199 11.4614ZM31.2188 49.8489C31.2188 49.8489 5.49219 33.3651 5.49219 18.8252C5.49219 11.4614 11.5842 5.49224 19.0998 5.49224C24.3824 5.49224 28.9641 8.44068 31.2188 12.7477C33.4734 8.44068 38.0551 5.49224 43.3377 5.49224C50.8533 5.49224 56.9453 11.4614 56.9453 18.8252C56.9453 33.3651 31.2188 49.8489 31.2188 49.8489Z" fill="black"/>
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="fitting-container">
+            <div class="fitting-preview" id="fitting-preview">
+                <div class="fitting-preview__placeholder" id="preview-placeholder">
+                    Выберите фото и одежду,<br>затем нажмите «Примерить»
+                </div>
+
+                <div class="fitting-status" id="fitting-status">
+                    <div class="fitting-loader__spinner"></div>
+                    <div class="fitting-loader__text" id="status-text">Идёт генерация...</div>
+                    <div class="fitting-loader__sub" id="status-sub">Это может занять до 5 минут. Не закрывайте страницу.</div>
+                </div>
+
+                <div class="fitting-preview__buttons">
+                    <a href="../Saved/index.html" class="fitting-btn fitting-btn--saved">К сохранённым</a>
+                    <button class="fitting-btn fitting-btn--primary" id="fitting-btn" type="button">Примерить</button>
+                </div>
+            </div>
+
+            <div class="fitting-panel">
+                <div class="fitting-scroll" id="fitting-scroll">
+                    <div class="fitting-grid" id="fitting-grid">
+                        <p class="fitting-empty-message">Загрузка...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // =========================================
+            // НАСТРОЙКА: адрес Flask-сервера
+            // =========================================
+            const API_BASE = 'http://192.168.31.158:5000';
+
+            const grid = document.getElementById('fitting-grid');
+            const btn = document.getElementById('fitting-btn');
+            const status = document.getElementById('fitting-status');
+            const statusText = document.getElementById('status-text');
+            const statusSub = document.getElementById('status-sub');
+            const placeholder = document.getElementById('preview-placeholder');
+            const previewContainer = document.getElementById('fitting-preview');
+
+            const userId = localStorage.getItem('user_id');
+            let wishlistItems = [];
+            let userPhotos = [];
+            let state = 'idle';
+
+            const typeNames = {
+                'футболка': 'Футболки', 'куртка': 'Куртки', 'худи': 'Худи',
+                'свитер': 'Свитера', 'платье': 'Платья', 'костюм': 'Костюмы',
+                'штаны': 'Штаны', 'головной убор': 'Головные уборы',
+                'обувь': 'Обувь', 'аксессуар': 'Аксессуары'
+            };
+
+            // =========================================
+            // 1. ЗАГРУЗКА ДАННЫХ
+            // =========================================
+            async function loadData() {
+                if (!userId || userId === '0') {
+                    grid.innerHTML = '<p class="fitting-empty-message">Пожалуйста, <a href="../Login/index.html" style="color: #ff2a6d;">войдите в аккаунт</a>.</p>';
+                    return;
+                }
+
+                try {
+                    const [wishlistRes, photosRes] = await Promise.all([
+                        fetch(`${API_BASE}/api/wishlist?user_id=${userId}`),
+                        fetch(`${API_BASE}/api/user/photos?user_id=${userId}`)
+                    ]);
+
+                    if (!wishlistRes.ok || !photosRes.ok) throw new Error('Ошибка сети');
+
+                    wishlistItems = await wishlistRes.json();
+                    userPhotos = await photosRes.json();
+
+                    renderGrid();
+                } catch (err) {
+                    console.error('Ошибка загрузки:', err);
+                    grid.innerHTML = '<p class="fitting-empty-message">Не удалось загрузить данные. Проверьте, запущен ли сервер.</p>';
+                }
+            }
+
+            // =========================================
+            // 2. ОТРИСОВКА
+            // =========================================
+            function renderGrid() {
+                grid.innerHTML = '';
+
+                // --- ФОТО ПОЛЬЗОВАТЕЛЯ ---
+                if (userPhotos.length === 0) {
+                    const section = document.createElement('div');
+                    section.innerHTML = `
+                        <h3 class="fitting-category-title">Фото</h3>
+                        <p class="fitting-empty-message">Нет фото. <a href="../Upload/index.html" style="color:#ff2a6d;">Загрузить</a></p>
+                    `;
+                    grid.appendChild(section);
+                } else {
+                    const section = document.createElement('div');
+                    section.innerHTML = '<h3 class="fitting-category-title">Фото</h3>';
+
+                    const photoGrid = document.createElement('div');
+                    photoGrid.className = 'fitting-photo-grid';
+
+                    userPhotos.forEach((photoPath, index) => {
+                        const card = document.createElement('div');
+                        card.className = 'fitting-photo-card';
+                        card.dataset.photo = photoPath;
+                        card.innerHTML = `
+                            <img src="${API_BASE}/${photoPath}" alt="Фото ${index + 1}">
+                            <div class="fitting-photo__badge">Фото ${index + 1}</div>
+                        `;
+                        photoGrid.appendChild(card);
+                    });
+
+                    section.appendChild(photoGrid);
+                    grid.appendChild(section);
+                }
+
+                // --- ОДЕЖДА ---
+                if (wishlistItems.length === 0) {
+                    const section = document.createElement('div');
+                    section.innerHTML = `
+                        <h3 class="fitting-category-title">Одежда</h3>
+                        <p class="fitting-empty-message">Вишлист пуст. <a href="../Catalog/index.html" style="color:#ff2a6d;">В каталог</a></p>
+                    `;
+                    grid.appendChild(section);
+                } else {
+                    const grouped = {};
+                    wishlistItems.forEach(item => {
+                        const type = item.type || 'Другое';
+                        if (!grouped[type]) grouped[type] = [];
+                        grouped[type].push(item);
+                    });
+
+                    for (const [type, products] of Object.entries(grouped)) {
+                        const section = document.createElement('div');
+                        section.innerHTML = `<h3 class="fitting-category-title">${typeNames[type] || type}</h3>`;
+
+                        const clothesGrid = document.createElement('div');
+                        clothesGrid.className = 'fitting-clothes-grid';
+
+                        const radioGroupName = `fitting_${type.toLowerCase().replace(/\s+/g, '_')}`;
+
+                        products.forEach(item => {
+                            const card = document.createElement('div');
+                            card.className = 'fitting-card';
+                            card.dataset.id = item.id;
+                            const radioId = `radio-${item.id}`;
+
+                            card.innerHTML = `
+                                <label class="fitting-card__radio-label" for="${radioId}">
+                                    <input type="radio" id="${radioId}" name="${radioGroupName}" value="${item.id}" class="fitting-radio">
+                                    <span class="fitting-card__radio-visual"></span>
+                                    <span class="fitting-card__radio-text">Выбрать</span>
+                                </label>
+                                <button class="fitting-card__trash" type="button" aria-label="Удалить">
+                                    <svg viewBox="0 0 30 30" fill="currentColor"><path d="M9 25a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9H9v16zM22 4h-4l-1-1h-4l-1 1H8v3h14V4z"/></svg>
+                                </button>
+                                <img src="${item.image.replace('../', API_BASE + '/')}" alt="${item.name}">
+                            `;
+
+                            clothesGrid.appendChild(card);
+                        });
+
+                        section.appendChild(clothesGrid);
+                        grid.appendChild(section);
+                    }
+                }
+            }
+
+            // =========================================
+            // 3. ОБРАБОТКА КЛИКОВ
+            // =========================================
+            grid.addEventListener('click', async (e) => {
+                const photoCard = e.target.closest('.fitting-photo-card');
+                if (photoCard) {
+                    document.querySelectorAll('.fitting-photo-card').forEach(c => c.classList.remove('is-selected'));
+                    photoCard.classList.add('is-selected');
+                    return;
+                }
+
+                const clothesCard = e.target.closest('.fitting-card');
+                if (clothesCard && !e.target.closest('.fitting-card__trash')) {
+                    const radio = clothesCard.querySelector('.fitting-radio');
+                    if (radio) {
+                        const groupName = radio.name;
+                        document.querySelectorAll(`input[name="${groupName}"]`).forEach(r => {
+                            const c = r.closest('.fitting-card');
+                            if (c) c.classList.remove('is-selected');
+                            r.checked = false;
+                        });
+                        radio.checked = true;
+                        clothesCard.classList.add('is-selected');
+                    }
+                    return;
+                }
+
+                const trashBtn = e.target.closest('.fitting-card__trash');
+                if (trashBtn) {
+                    const card = trashBtn.closest('.fitting-card');
+                    const productId = card.dataset.id;
+
+                    try {
+                        const res = await fetch(`${API_BASE}/api/wishlist/toggle`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ user_id: userId, product_id: productId })
+                        });
+
+                        if (res.ok) {
+                            card.style.opacity = '0';
+                            card.style.transform = 'scale(0.8)';
+                            card.style.transition = 'all 0.3s ease';
+                            setTimeout(() => {
+                                wishlistItems = wishlistItems.filter(i => String(i.id) !== productId);
+                                renderGrid();
+                            }, 300);
+                        }
+                    } catch (err) {
+                        console.error('Ошибка удаления:', err);
+                    }
+                }
+            });
+
+            // =========================================
+            // 4. КНОПКА "ПРИМЕРИТЬ" — РЕАЛЬНЫЙ ЗАПРОС
+            // =========================================
+            btn.addEventListener('click', async () => {
+                // Кнопка "Сбросить" — очищаем результат
+                if (state === 'done') {
+                    state = 'idle';
+                    btn.textContent = 'Примерить';
+                    placeholder.style.display = 'block';
+                    placeholder.innerHTML = 'Выберите фото и одежду,<br>затем нажмите «Примерить»';
+                    const oldImg = previewContainer.querySelector('.fitting-preview__result');
+                    if (oldImg) oldImg.remove();
+                    return;
+                }
+
+                if (state === 'loading') return;
+
+                // --- Проверяем выбор ---
+                const selectedPhotoCard = document.querySelector('.fitting-photo-card.is-selected');
+                if (!selectedPhotoCard) {
+                    alert('Выберите одно фото (кликните по карточке)');
+                    return;
+                }
+
+                const selectedCards = document.querySelectorAll('.fitting-card.is-selected');
+                if (selectedCards.length === 0) {
+                    alert('Выберите хотя бы один предмет одежды');
+                    return;
+                }
+
+                // --- Собираем данные ---
+                const sourcePhoto = selectedPhotoCard.dataset.photo;
+                const productIds = Array.from(selectedCards).map(c => parseInt(c.dataset.id));
+
+                console.log('📦 Отправка:', { user_id: userId, source_photo: sourcePhoto, product_ids: productIds });
+
+                // --- UI: загрузка ---
+                state = 'loading';
+                btn.disabled = true;
+                btn.textContent = 'Генерация...';
+                status.classList.add('is-visible');
+                statusText.textContent = 'Идёт генерация...';
+                statusSub.textContent = 'Первая генерация может занять до 5 минут. Не закрывайте страницу.';
+
+                // Убираем старое изображение
+                const oldImg = previewContainer.querySelector('.fitting-preview__result');
+                if (oldImg) oldImg.remove();
+
+                try {
+                    const res = await fetch(`${API_BASE}/api/generate/tryon`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            user_id: userId,
+                            source_photo: sourcePhoto,
+                            product_ids: productIds
+                        })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.status === 'ok') {
+                        const resultUrl = `${API_BASE}/${data.result}?t=${Date.now()}`;
+
+                        const img = document.createElement('img');
+                        img.className = 'fitting-preview__result';
+                        img.src = resultUrl;
+                        img.alt = 'Результат примерки';
+                        previewContainer.appendChild(img);
+                        placeholder.style.display = 'none';
+
+                        state = 'done';
+                        btn.textContent = 'Сбросить';
+                        status.classList.remove('is-visible');
+                        btn.disabled = false;
+
+                        console.log('✅ Готово! generation_id =', data.generation_id);
+                    } else {
+                        alert('Не удалось сгенерировать: ' + (data.message || 'Неизвестная ошибка') +
+                              (data.details ? '\n\nДетали: ' + data.details : ''));
+                        state = 'idle';
+                        btn.textContent = 'Примерить';
+                        status.classList.remove('is-visible');
+                        btn.disabled = false;
+                    }
+                } catch (err) {
+                    console.error('Ошибка сети:', err);
+                    alert('Не удалось соединиться с сервером. Проверьте, запущен ли он.');
+                    state = 'idle';
+                    btn.textContent = 'Примерить';
+                    status.classList.remove('is-visible');
+                    btn.disabled = false;
+                }
+            });
+
+            // === СТАРТ ===
+            loadData();
+        });
+    </script>
+</body>
+</html>

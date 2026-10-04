@@ -1,0 +1,485 @@
+/* =========================================
+   СБРОС И БАЗОВЫЕ СТИЛИ
+   ========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 1920px;
+    height: 1024px;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'JetBrains Mono', 'Segoe UI', Tahoma, Arial, sans-serif;
+    color: #222;
+    background: #fff;
+}
+
+.page {
+    width: 1920px;
+    height: 1024px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: linear-gradient(135deg, #FF427E 0%, #FF3C79 21%, #FF7CA5 47%, #D0577D 71%, #772640 100%);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.page img,
+.page svg {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+}
+
+.page__texture {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 1280px;
+    height: 852px;
+    z-index: 1;
+    pointer-events: none;
+    display: block;
+    overflow: visible;
+}
+
+/* =========================================
+   ШАПКА (HEADER) — БЕЗ ИЗМЕНЕНИЙ
+   ========================================= */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 1920px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 0 60px;
+    color: #fff;
+    overflow: hidden;
+    background: linear-gradient(135deg, #FF427E 0%, #FF3C79 21%, #FF7CA5 47%, #D0577D 71%, #772640 100%);
+    background-size: 1920px 1024px;
+    background-position: top left;
+    background-repeat: no-repeat;
+}
+
+.header__water {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 96px;
+    z-index: 0;
+    pointer-events: none;
+    display: block;
+}
+
+.header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    background: #000;
+    z-index: 2;
+}
+
+.header__left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.header__exit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43.17px;
+    height: 49.33px;
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.header__exit svg {
+    display: block;
+    width: 43.17px;
+    height: 49.33px;
+}
+
+.header__logo {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 24px;
+    font-weight: 500;
+    color: #FF2A6D;
+    background: #0B091A;
+    letter-spacing: 2px;
+    line-height: 24px;
+    padding: 12px 18px;
+    border-radius: 6px;
+    display: inline-block;
+    text-decoration: none;
+    pointer-events: auto;
+    transition: opacity 0.2s;
+}
+
+.header__logo:hover {
+    opacity: 0.85;
+}
+
+.header__capsule {
+    width: 660px;
+    height: 75px;
+    background: #0B091A;
+    border-radius: 69px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.header__right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.header__btn {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+    pointer-events: auto;
+    text-decoration: none;
+}
+
+.header__btn:hover {
+    opacity: 0.7;
+}
+
+.header__btn svg {
+    display: block;
+    pointer-events: none;
+}
+
+/* =========================================
+   ОСНОВНОЙ КОНТЕНТ
+   ========================================= */
+
+.main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 96px;
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================
+   СЕКЦИЯ ЗАГРУЗКИ (НОВАЯ КОНЦЕПЦИЯ)
+   ========================================= */
+
+.upload-section {
+    width: 1700px;
+    height: 860px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 30px 40px;
+    background: rgba(11, 9, 26, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 51px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* Заголовок и подсказка */
+.upload-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.upload-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 1px;
+    line-height: 1.2;
+}
+
+.upload-subtitle {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+    max-width: 900px;
+}
+
+.upload-subtitle__icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* =========================================
+   СЕТКА КАРТОЧЕК
+   ========================================= */
+
+.upload-grid {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    padding: 10px 0;
+    overflow: hidden;
+}
+
+.upload-card {
+    position: relative;
+    width: 280px;
+    height: 560px;
+    background: #FFFFFF;
+    border-radius: 40px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.upload-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(255, 42, 109, 0.3);
+}
+
+.upload-card__preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;       /* Фото показывается целиком, без обрезки */
+    object-position: center;
+    pointer-events: none;
+    transition: transform 0.4s ease;
+}
+
+.upload-card__preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    pointer-events: none;
+    transition: transform 0.4s ease;
+}
+
+.upload-card:hover .upload-card__preview img {
+    transform: scale(1.05);
+}
+
+.upload-card__add {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 56px;
+    background: #0B091A;
+    border: none;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s ease, background 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+}
+
+.upload-card__add svg {
+    width: 28px;
+    height: 26px;
+    pointer-events: none;
+}
+
+.upload-card__add:hover {
+    transform: scale(1.08);
+    background: #FF2A6D;
+}
+
+.upload-card__add:hover svg path {
+    fill: #FFFFFF;
+}
+
+.upload-card__add:active {
+    transform: scale(0.94);
+}
+
+.upload-card__label {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+    background: rgba(11, 9, 26, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    color: #FFFFFF;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Заполненная карточка */
+.upload-card.is-filled .upload-card__add {
+    background: #FF2A6D;
+}
+
+.upload-card.is-filled .upload-card__add svg path {
+    fill: #FFFFFF;
+}
+
+/* =========================================
+   НИЖНЯЯ ПАНЕЛЬ С КНОПКАМИ
+   ========================================= */
+
+.upload-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+    padding-top: 10px;
+}
+
+.upload-hint {
+    color: #FF2A6D;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-align: center;
+    transition: opacity 0.3s ease;
+}
+
+.upload-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+}
+
+/* Кнопки */
+.btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    padding: 16px 32px;
+    border-radius: 50px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
+    white-space: nowrap;
+    pointer-events: auto;
+}
+
+.btn--primary {
+    background: #FFFFFF;
+    color: #0B091A;
+    border-color: #FFFFFF;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+}
+
+.btn--primary:hover {
+    background: #FF2A6D;
+    border-color: #FF2A6D;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 42, 109, 0.4);
+}
+
+.btn--primary:active {
+    transform: translateY(1px);
+}
+
+.btn--secondary {
+    background: transparent;
+    color: #FFFFFF;
+    border-color: #FF2A6D;
+}
+
+.btn--secondary:hover {
+    background: #FF2A6D;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+}
+
+.btn--secondary:active {
+    transform: translateY(1px);
+}
+
+.btn--ghost {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn--ghost:hover {
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Состояние загрузки */
+.btn.is-loading {
+    opacity: 0.7;
+    pointer-events: none;
+    cursor: wait;
+}

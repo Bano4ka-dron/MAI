@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, initial-scale=1.0">
+    <title>MAI — Профиль</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page">
+        <svg class="page__texture" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1280" height="852" viewBox="0 0 1280 852" preserveAspectRatio="xMidYMid meet">
+            <defs>
+                <filter id="water-ripple" x="-10%" y="-10%" width="120%" height="120%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="noise">
+                        <animate attributeName="baseFrequency" dur="12s" values="0.012 0.018; 0.018 0.012; 0.012 0.018" repeatCount="indefinite"/>
+                    </feTurbulence>
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
+            </defs>
+            <image xlink:href="../images/фон.png" x="0" y="0" width="1280" height="852" filter="url(#water-ripple)"/>
+        </svg>
+
+        <header class="header">
+            <svg class="header__water" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="96" viewBox="0 0 1920 96" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <filter id="header-water-ripple" x="-10%" y="-10%" width="120%" height="120%">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="2" seed="21" result="noise">
+                            <animate attributeName="baseFrequency" dur="10s" values="0.014 0.02; 0.02 0.014; 0.014 0.02" repeatCount="indefinite"/>
+                        </feTurbulence>
+                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+                    </filter>
+                </defs>
+                <image xlink:href="../images/фон.png" x="0" y="0" width="1920" height="600" preserveAspectRatio="xMidYMid slice" filter="url(#header-water-ripple)"/>
+            </svg>
+
+            <div class="header__left">
+                <a href="../Login/index.html" class="header__exit" aria-label="Выход из аккаунта">
+                    <svg width="52" height="58" viewBox="0 0 52 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M34.9167 4.08337H4.08333V47.25C4.08333 48.8855 4.73303 50.4541 5.8895 51.6105C7.04598 52.767 8.61449 53.4167 10.25 53.4167H34.9167M38 19.5L47.25 28.75L38 38M47.25 28.75H16.4167"
+                              stroke="#000" stroke-width="8.16667" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <a href="../Index/index.html" class="header__logo">MAI</a>
+            </div>
+
+            <div class="header__capsule"></div>
+
+            <div class="header__right">
+                <a href="../Fitting/index.html" class="header__btn" aria-label="Каталог">
+                    <svg width="62" height="59" viewBox="0 0 62 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M33.9292 26.455V24.2658C39.2326 22.8783 43.1792 18.0683 43.1792 12.3333C43.1792 5.51917 37.6601 0 30.8459 0C24.0317 0 18.5126 5.51917 18.5126 12.3333H24.6792C24.6792 8.94167 27.4542 6.16667 30.8459 6.16667C34.2376 6.16667 37.0126 8.94167 37.0126 12.3333C37.0126 15.725 34.2376 18.5 30.8459 18.5C29.1501 18.5 27.7626 19.8875 27.7626 21.5833V26.4858L0.906741 53.28C0.0125746 54.1742 -0.234092 55.5 0.228408 56.6408C0.690908 57.7817 1.83174 58.5525 3.06507 58.5525H58.5651C59.7984 58.5525 60.9392 57.8125 61.4017 56.6408C61.8642 55.5 61.6176 54.1742 60.7234 53.28L33.8676 26.4242L33.9292 26.455ZM10.5267 52.3858L30.8459 32.0667L51.1651 52.3858H10.5267Z" fill="black"/>
+                    </svg>
+                </a>
+                <a href="index.html" class="header__btn" aria-label="Профиль">
+                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24.6667 24.6667C31.4808 24.6667 37 19.1475 37 12.3333C37 5.51917 31.4808 0 24.6667 0C17.8525 0 12.3333 5.51917 12.3333 12.3333C12.3333 19.1475 17.8525 24.6667 24.6667 24.6667ZM24.6667 30.8333C16.4342 30.8333 0 34.965 0 43.1667V49.3333H49.3333V43.1667C49.3333 34.965 32.8992 30.8333 24.6667 30.8333Z" fill="black"/>
+                    </svg>
+                </a>
+                <a href="../Wishlist/index.html" class="header__btn" aria-label="Избранное">
+                    <svg width="63" height="56" viewBox="0 0 63 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M60.9199 11.4614C59.9513 9.21849 58.5546 7.18602 56.808 5.47779C55.0601 3.76441 52.9993 2.40282 50.7377 1.46704C48.3925 0.49278 45.8772 -0.00586966 43.3377 5.21307e-05C39.775 5.21307e-05 36.299 0.975638 33.2783 2.81841C32.5557 3.25923 31.8691 3.74341 31.2188 4.27095C30.5684 3.74341 29.8818 3.25923 29.1592 2.81841C26.1385 0.975638 22.6625 5.21307e-05 19.0998 5.21307e-05C16.5344 5.21307e-05 14.0484 0.491459 11.6998 1.46704C9.43066 2.4065 7.38555 3.75786 5.62949 5.47779C3.88058 7.18409 2.48354 9.21704 1.51758 11.4614C0.513086 13.7956 0 16.2743 0 18.8252C0 21.2317 0.491406 23.7393 1.46699 26.2903C2.28359 28.4221 3.4543 30.6334 4.9502 32.8665C7.32051 36.4002 10.5797 40.0858 14.6266 43.8219C21.3328 50.0151 27.974 54.2932 28.2559 54.4666L29.9686 55.5651C30.7273 56.0493 31.7029 56.0493 32.4617 55.5651L34.1744 54.4666C34.4563 54.286 41.0902 50.0151 47.8037 43.8219C51.8506 40.0858 55.1098 36.4002 57.4801 32.8665C58.976 30.6334 60.1539 28.4221 60.9633 26.2903C61.9389 23.7393 62.4303 21.2317 62.4303 18.8252C62.4375 16.2743 61.9244 13.7956 60.9199 11.4614ZM31.2188 49.8489C31.2188 49.8489 5.49219 33.3651 5.49219 18.8252C5.49219 11.4614 11.5842 5.49224 19.0998 5.49224C24.3824 5.49224 28.9641 8.44068 31.2188 12.7477C33.4734 8.44068 38.0551 5.49224 43.3377 5.49224C50.8533 5.49224 56.9453 11.4614 56.9453 18.8252C56.9453 33.3651 31.2188 49.8489 31.2188 49.8489Z" fill="black"/>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="profile-photo-wrap">
+                <img class="profile-photo" id="profile-photo" src="../images/фото профиля.png" alt="Фото профиля">
+                <button class="profile-photo__edit" type="button" id="profile-photo-edit" aria-label="Загрузить фото">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="57" height="52" viewBox="0 0 57 52" fill="none">
+                        <path d="M56.8333 41.3333H49.0833V51.6667H43.9167V41.3333H36.1667L46.5 31L56.8333 41.3333ZM49.104 0C50.5171 0 51.6667 1.14958 51.6667 2.56525V25.8333H46.5V5.16667H5.16667V41.3308L31 15.5L38.75 23.25V30.5608L31 22.8057L12.4698 41.3333H31V46.5H2.56267C1.88277 46.4993 1.23095 46.2287 0.750431 45.7477C0.269912 45.2667 -3.44759e-07 44.6147 0 43.9348V2.56525C0.00472761 1.88681 0.276159 1.23746 0.755658 0.757479C1.23516 0.277496 1.88423 0.00541118 2.56267 0H49.104ZM15.5 10.3333C16.8703 10.3333 18.1844 10.8777 19.1534 11.8466C20.1223 12.8156 20.6667 14.1297 20.6667 15.5C20.6667 16.8703 20.1223 18.1844 19.1534 19.1534C18.1844 20.1223 16.8703 20.6667 15.5 20.6667C14.1297 20.6667 12.8156 20.1223 11.8466 19.1534C10.8777 18.1844 10.3333 16.8703 10.3333 15.5C10.3333 14.1297 10.8777 12.8156 11.8466 11.8466C12.8156 10.8777 14.1297 10.3333 15.5 10.3333Z" fill="black"/>
+                    </svg>
+                </button>
+                <input type="file" id="profile-photo-input" accept="image/*" hidden>
+            </div>
+
+            <a href="../Data/index.html" class="fit-data-btn">
+                Данные для<br>примерки
+            </a>
+
+            <h2 class="block-title block-title--1">Заказы</h2>
+            <div class="block block--1">
+                <div class="block__scroll" data-block-scroll>
+                    <div class="block__scroll-inner">
+                        <div class="order__card">
+                            <div class="order__photo">
+                                <img src="../images/куртка.png" alt="Товар">
+                            </div>
+                            <div class="order__right">
+                                <div class="order__status order__status--green">Можно<br>забирать</div>
+                                <div class="order__date">до 30 сентября</div>
+                            </div>
+                        </div>
+
+                        <div class="order__card">
+                            <div class="order__photo">
+                                <img src="../images/свитер.png" alt="Товар">
+                            </div>
+                            <div class="order__right">
+                                <div class="order__status order__status--orange">В пути</div>
+                                <div class="order__date">ожидается 27<br>сентября</div>
+                            </div>
+                        </div>
+
+                        <div class="order__card">
+                            <div class="order__photo">
+                                <img src="../images/куртка.png" alt="Товар">
+                            </div>
+                            <div class="order__right">
+                                <div class="order__status order__status--green">Можно<br>забирать</div>
+                                <div class="order__date">до 30 сентября</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block__slider" data-block-slider>
+                    <div class="block__slider-thumb" data-block-thumb></div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title--2">Оцените товар</h2>
+            <div class="block block--2">
+                <div class="block__scroll" data-block-scroll>
+                    <div class="block__scroll-inner">
+                        <div class="rate__card" data-rate>
+                            <div class="rate__photo">
+                                <img src="../images/куртка.png" alt="Товар">
+                            </div>
+                            <div class="rate__right">
+                                <div class="rate__stars" data-rate-stars>
+                                    <button class="rate__star" type="button" data-value="1" aria-label="1 звезда">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="2" aria-label="2 звезды">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="3" aria-label="3 звезды">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="4" aria-label="4 звезды">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="5" aria-label="5 звёзд">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                </div>
+                                <textarea class="rate__comment" placeholder="Комментарий"></textarea>
+                                <button class="rate__submit" type="button">отправить</button>
+                            </div>
+                        </div>
+
+                        <div class="rate__card" data-rate>
+                            <div class="rate__photo">
+                                <img src="../images/свитер.png" alt="Товар">
+                            </div>
+                            <div class="rate__right">
+                                <div class="rate__stars" data-rate-stars>
+                                    <button class="rate__star" type="button" data-value="1" aria-label="1 звезда">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="2" aria-label="2 звезды">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="3" aria-label="3 звезды">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="4" aria-label="4 звезды">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="5" aria-label="5 звёзд">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                </div>
+                                <textarea class="rate__comment" placeholder="Комментарий"></textarea>
+                                <button class="rate__submit" type="button">отправить</button>
+                            </div>
+                        </div>
+
+                        <div class="rate__card" data-rate>
+                            <div class="rate__photo">
+                                <img src="../images/куртка.png" alt="Товар">
+                            </div>
+                            <div class="rate__right">
+                                <div class="rate__stars" data-rate-stars>
+                                    <button class="rate__star" type="button" data-value="1" aria-label="1 звезда">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="2" aria-label="2 звезды">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="3" aria-label="3 звезды">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="4" aria-label="4 звезды">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                    <button class="rate__star" type="button" data-value="5" aria-label="5 звёзд">
+                                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                    </button>
+                                </div>
+                                <textarea class="rate__comment" placeholder="Комментарий"></textarea>
+                                <button class="rate__submit" type="button">отправить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block__slider" data-block-slider>
+                    <div class="block__slider-thumb" data-block-thumb></div>
+                </div>
+            </div>
+
+            <h2 class="block-title block-title--3">Вы смотрели</h2>
+            <div class="block block--3">
+                <div class="block__scroll" data-block-scroll>
+                    <div class="block__scroll-inner">
+                        <a href="../Catalog/index.html" class="viewed__card"><img src="../images/О1.png" alt="Товар"></a>
+                        <a href="../Catalog/index.html" class="viewed__card"><img src="../images/О2.png" alt="Товар"></a>
+                        <a href="../Catalog/index.html" class="viewed__card"><img src="../images/О3.png" alt="Товар"></a>
+                        <a href="../Catalog/index.html" class="viewed__card"><img src="../images/О4.png" alt="Товар"></a>
+                        <a href="../Catalog/index.html" class="viewed__card"><img src="../images/О1.png" alt="Товар"></a>
+                        <a href="../Catalog/index.html" class="viewed__card"><img src="../images/О2.png" alt="Товар"></a>
+                        <a href="../Catalog/index.html" class="viewed__card"><img src="../images/О3.png" alt="Товар"></a>
+                        <a href="../Catalog/index.html" class="viewed__card"><img src="../images/О4.png" alt="Товар"></a>
+                    </div>
+                </div>
+                <div class="block__slider" data-block-slider>
+                    <div class="block__slider-thumb" data-block-thumb></div>
+                </div>
+            </div>
+        </main>
+
+        <div class="crop-modal" id="crop-modal">
+            <div class="crop-modal__inner">
+                <h2 class="crop-modal__title">Выберите кадр</h2>
+
+                <div class="crop-stage" id="crop-stage">
+                    <img class="crop-stage__img" id="crop-img" src="" alt="Кадр">
+                </div>
+
+                <div class="crop-zoom">
+                    <span class="crop-zoom__label">−</span>
+                    <input class="crop-zoom__range" type="range" id="crop-zoom" min="1" max="3" step="0.01" value="1">
+                    <span class="crop-zoom__label">+</span>
+                </div>
+
+                <div class="crop-actions">
+                    <button class="crop-btn crop-btn--cancel" type="button" id="crop-cancel">Отмена</button>
+                    <button class="crop-btn crop-btn--save" type="button" id="crop-save">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

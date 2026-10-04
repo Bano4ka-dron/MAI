@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, initial-scale=1.0">
+    <title>MAI — Админ панель</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Register/style.css">
+    <style>
+        /* ===== СТИЛИ ДЛЯ ФОРМЫ АДМИНКИ ===== */
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Отступ между всеми полями */
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .admin-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .admin-field input,
+        .admin-field select {
+            width: 100%;
+            padding: 14px 16px;
+            background: #0B091A;
+            border: 1px solid #FF2A6D;
+            border-radius: 6px;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .admin-field input:focus,
+        .admin-field select:focus {
+            border-color: #fff;
+        }
+
+        .admin-field input[type="file"] {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .admin-field input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .admin-field select option {
+            background: #0B091A;
+            color: #fff;
+        }
+
+        .admin-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        /* ===== СТИЛИ ДЛЯ СПИСКА ТОВАРОВ ===== */
+        .admin-products-title {
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 500;
+            text-align: center;
+            margin: 30px 0 15px 0;
+            letter-spacing: 1px;
+        }
+
+        .admin-products-list {
+            width: 100%;
+            max-width: 500px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 0 auto;
+            padding: 15px;
+            background: rgba(11, 9, 26, 0.6);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 42, 109, 0.4);
+            box-sizing: border-box;
+        }
+
+        .admin-products-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .admin-products-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+        .admin-products-list::-webkit-scrollbar-thumb {
+            background: #FF2A6D;
+            border-radius: 3px;
+        }
+
+        .admin-product-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 42, 109, 0.3);
+            transition: all 0.2s;
+        }
+
+        .admin-product-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .admin-product-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #FF2A6D;
+        }
+
+        .admin-product-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+            background: #0B091A;
+        }
+
+        .admin-product-info {
+            flex: 1;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            min-width: 0;
+        }
+
+        .admin-product-info strong {
+            color: #FF2A6D;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .admin-product-info span {
+            opacity: 0.7;
+            font-size: 12px;
+        }
+
+        .admin-delete-btn {
+            padding: 8px 16px;
+            background: #FF2A6D;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .admin-delete-btn:hover {
+            background: #ff0040;
+            transform: scale(1.05);
+        }
+
+        .admin-delete-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .admin-empty {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+        }
+
+        .image-preview-wrap {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .image-preview-wrap img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 10px;
+            border: 2px solid #FF2A6D;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <svg class="page__texture" xmlns="http://www.w3.org/2000/svg" width="1280" height="852" viewBox="0 0 1280 852" preserveAspectRatio="xMidYMid meet">
+            <defs>
+                <filter id="water-ripple" x="-10%" y="-10%" width="120%" height="120%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="noise">
+                        <animate attributeName="baseFrequency" dur="12s" values="0.012 0.018; 0.018 0.012; 0.012 0.018" repeatCount="indefinite"/>
+                    </feTurbulence>
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
+            </defs>
+            <image xlink:href="../images/фон.png" x="0" y="0" width="1280" height="852" filter="url(#water-ripple)"/>
+        </svg>
+
+        <main class="main">
+            <section class="auth-block">
+                <h1 class="auth-logo">Админ панель</h1>
+                <p style="color: #fff; text-align: center; margin-bottom: 25px; font-family: 'JetBrains Mono'; font-size: 14px; opacity: 0.8;">Управление каталогом</p>
+
+                <!-- ===== ФОРМА ДОБАВЛЕНИЯ ===== -->
+                <div class="admin-form">
+                    <div class="admin-field">
+                        <select id="prod-type">
+    <option value="" selected disabled>Тип товара:</option>
+    <option value="футболка">Футболка</option>
+    <option value="куртка">Куртка</option>
+    <option value="худи">Худи</option>
+    <option value="свитер">Свитер / Кардиган</option>
+    <option value="платье">Платье</option>
+    <option value="костюм">Костюм</option>
+    <option value="штаны">Штаны / Джинсы</option>
+    <option value="головной убор">Головной убор</option>
+    <option value="обувь">Обувь</option>
+    <option value="аксессуар">Аксессуар (ремень, сумка и т.д.)</option>
+</select>
+                    </div>
+
+                    <div class="admin-field">
+                        <input type="text" id="prod-name" placeholder="Название товара" maxlength="64">
+                    </div>
+
+                    <div class="admin-field">
+                        <input type="number" id="prod-price" placeholder="Цена (только цифры)" min="0">
+                    </div>
+
+                    <div class="admin-field">
+                        <input type="file" id="prod-image" accept="image/png, image/jpeg, image/webp">
+                        <div class="image-preview-wrap">
+                            <img id="image-preview" alt="Предпросмотр">
+                        </div>
+                    </div>
+
+                    <div class="admin-buttons">
+                        <button class="auth-btn auth-btn--primary" type="button" id="add-prod-btn">Добавить товар</button>
+                        <a href="../Index/index.html" class="auth-btn auth-btn--secondary">На главную</a>
+                    </div>
+                </div>
+
+                <!-- ===== СПИСОК ТОВАРОВ ===== -->
+                <h2 class="admin-products-title">Список товаров</h2>
+                <div class="admin-products-list" id="products-list">
+                    <p class="admin-empty">Загрузка...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, initial-scale=1.0">
+    <title>MAI — Параметры тела</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page">
+        <svg class="page__texture" xmlns="http://www.w3.org/2000/svg" width="1280" height="852" viewBox="0 0 1280 852" preserveAspectRatio="xMidYMid meet">
+            <defs>
+                <filter id="water-ripple" x="-10%" y="-10%" width="120%" height="120%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="noise">
+                        <animate attributeName="baseFrequency" dur="12s" values="0.012 0.018; 0.018 0.012; 0.012 0.018" repeatCount="indefinite"/>
+                    </feTurbulence>
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
+            </defs>
+            <image xlink:href="../images/фон.png" x="0" y="0" width="1280" height="852" filter="url(#water-ripple)"/>
+        </svg>
+
+        <header class="header">
+            <!-- (Ваш существующий header без изменений) -->
+            <div class="header__left">
+                <a href="../Login/index.html" class="header__exit" aria-label="Выход из аккаунта">
+                    <svg width="52" height="58" viewBox="0 0 52 58" fill="none"><path d="M34.9167 4.08337H4.08333V47.25C4.08333 48.8855 4.73303 50.4541 5.8895 51.6105C7.04598 52.767 8.61449 53.4167 10.25 53.4167H34.9167M38 19.5L47.25 28.75L38 38M47.25 28.75H16.4167" stroke="#000" stroke-width="8.16667" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="../Index/index.html" class="header__logo">MAI</a>
+            </div>
+            <div class="header__capsule"></div>
+            <div class="header__right">
+                <a href="../Fitting/index.html" class="header__btn" aria-label="Каталог">
+                    <svg width="62" height="59" viewBox="0 0 62 59" fill="none"><path d="M33.9292 26.455V24.2658C39.2326 22.8783 43.1792 18.0683 43.1792 12.3333C43.1792 5.51917 37.6601 0 30.8459 0C24.0317 0 18.5126 5.51917 18.5126 12.3333H24.6792C24.6792 8.94167 27.4542 6.16667 30.8459 6.16667C34.2376 6.16667 37.0126 8.94167 37.0126 12.3333C37.0126 15.725 34.2376 18.5 30.8459 18.5C29.1501 18.5 27.7626 19.8875 27.7626 21.5833V26.4858L0.906741 53.28C0.0125746 54.1742 -0.234092 55.5 0.228408 56.6408C0.690908 57.7817 1.83174 58.5525 3.06507 58.5525H58.5651C59.7984 58.5525 60.9392 57.8125 61.4017 56.6408C61.8642 55.5 61.6176 54.1742 60.7234 53.28L33.8676 26.4242L33.9292 26.455ZM10.5267 52.3858L30.8459 32.0667L51.1651 52.3858H10.5267Z" fill="black"/></svg>
+                </a>
+                <a href="../Prof/index.html" class="header__btn" aria-label="Профиль">
+                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none"><path d="M24.6667 24.6667C31.4808 24.6667 37 19.1475 37 12.3333C37 5.51917 31.4808 0 24.6667 0C17.8525 0 12.3333 5.51917 12.3333 12.3333C12.3333 19.1475 17.8525 24.6667 24.6667 24.6667ZM24.6667 30.8333C16.4342 30.8333 0 34.965 0 43.1667V49.3333H49.3333V43.1667C49.3333 34.965 32.8992 30.8333 24.6667 30.8333Z" fill="black"/></svg>
+                </a>
+                <a href="../Wishlist/index.html" class="header__btn" aria-label="Избранное">
+                    <svg width="63" height="56" viewBox="0 0 63 56" fill="none"><path d="M60.9199 11.4614C59.9513 9.21849 58.5546 7.18602 56.808 5.47779C55.0601 3.76441 52.9993 2.40282 50.7377 1.46704C48.3925 0.49278 45.8772 -0.00586966 43.3377 5.21307e-05C39.775 5.21307e-05 36.299 0.975638 33.2783 2.81841C32.5557 3.25923 31.8691 3.74341 31.2188 4.27095C30.5684 3.74341 29.8818 3.25923 29.1592 2.81841C26.1385 0.975638 22.6625 5.21307e-05 19.0998 5.21307e-05C16.5344 5.21307e-05 14.0484 0.491459 11.6998 1.46704C9.43066 2.4065 7.38555 3.75786 5.62949 5.47779C3.88058 7.18409 2.48354 9.21704 1.51758 11.4614C0.513086 13.7956 0 16.2743 0 18.8252C0 21.2317 0.491406 23.7393 1.46699 26.2903C2.28359 28.4221 3.4543 30.6334 4.9502 32.8665C7.32051 36.4002 10.5797 40.0858 14.6266 43.8219C21.3328 50.0151 27.974 54.2932 28.2559 54.4666L29.9686 55.5651C30.7273 56.0493 31.7029 56.0493 32.4617 55.5651L34.1744 54.4666C34.4563 54.286 41.0902 50.0151 47.8037 43.8219C51.8506 40.0858 55.1098 36.4002 57.4801 32.8665C58.976 30.6334 60.1539 28.4221 60.9633 26.2903C61.9389 23.7393 62.4303 21.2317 62.4303 18.8252C62.4375 16.2743 61.9244 13.7956 60.9199 11.4614ZM31.2188 49.8489C31.2188 49.8489 5.49219 33.3651 5.49219 18.8252C5.49219 11.4614 11.5842 5.49224 19.0998 5.49224C24.3824 5.49224 28.9641 8.44068 31.2188 12.7477C33.4734 8.44068 38.0551 5.49224 43.3377 5.49224C50.8533 5.49224 56.9453 11.4614 56.9453 18.8252C56.9453 33.3651 31.2188 49.8489 31.2188 49.8489Z" fill="black"/></svg>
+                </a>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="data-block">
+                <!-- <h2 class="data-title">Параметры для примерки</h2> -->
+                <p class="data-subtitle">Эти данные помогут нейросети точнее подобрать размер</p>
+                
+                <div class="data-row">
+                    <div class="data-field-wrap">
+                        <input class="data-field" type="text" id="data-height" placeholder="Рост" inputmode="numeric" autocomplete="off">
+                        <span class="data-error" id="err-height"></span>
+                    </div>
+                    <div class="data-field-wrap">
+                        <input class="data-field" type="text" id="data-weight" placeholder="Вес" inputmode="numeric" autocomplete="off">
+                        <span class="data-error" id="err-weight"></span>
+                    </div>
+                </div>
+                
+                <div class="data-row">
+                    <div class="data-field-wrap">
+                        <input class="data-field" type="text" id="data-shoe" placeholder="Размер обуви" inputmode="numeric" autocomplete="off">
+                        <span class="data-error" id="err-shoe"></span>
+                    </div>
+                    <div class="data-field-wrap">
+                        <select class="data-field data-field--select" id="data-clothes">
+                            <option value="" selected disabled>Размер одежды</option>
+                            <option value="XXS">XXS</option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                            <option value="XXXL">XXXL</option>
+                        </select>
+                        <span class="data-error" id="err-clothes"></span>
+                    </div>
+                </div>
+            </section>
+
+            <a href="../Upload/index.html" class="data-btn data-btn--primary" id="data-next">Сохранить и перейти к загрузке фото</a>
+            <a href="../Prof/index.html" class="data-btn data-btn--secondary">Назад</a>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

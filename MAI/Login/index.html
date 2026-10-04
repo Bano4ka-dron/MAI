@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, initial-scale=1.0">
+    <title>MAI — Вход</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page">
+        <svg class="page__texture" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1280" height="852" viewBox="0 0 1280 852" preserveAspectRatio="xMidYMid meet">
+            <defs>
+                <filter id="water-ripple" x="-10%" y="-10%" width="120%" height="120%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="noise">
+                        <animate attributeName="baseFrequency" dur="12s" values="0.012 0.018; 0.018 0.012; 0.012 0.018" repeatCount="indefinite"/>
+                    </feTurbulence>
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
+            </defs>
+            <image xlink:href="../images/фон.png" x="0" y="0" width="1280" height="852" filter="url(#water-ripple)"/>
+        </svg>
+
+        <main class="main">
+            <section class="auth-block">
+                <h1 class="auth-logo">MirrAI</h1>
+                <input id="email" class="auth-field" type="text" placeholder="Почта">
+                <input id="password" class="auth-field" type="password" placeholder="Пароль">
+                <div class="auth-links">
+                    <a href="#" class="auth-link">Забыл пароль</a>
+                    <a href="../Register/index.html" class="auth-link">Зарегистрироваться</a>
+                </div>
+                <button id="btn" class="auth-btn">Войти</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
